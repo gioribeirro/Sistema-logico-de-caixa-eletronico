@@ -8,30 +8,37 @@ int main(int argc, char *argv[]) {
     int saldoDisponivel = 10000, valorSaque, nota100 = 0, nota50 = 0,
     nota20 = 0, nota10 = 0, nota5 = 0, nota2 = 0, moeda1 = 0;
 
+    int validarNumero;
+    int menorCedula = 1;
+
     // na apresentação do caixa eletrônico é solicitado o saque.
     printf("=== CAIXA ELETRONICO ===");
     printf("\nDigite o valor que deseja sacar: R$");
-    scanf("%d", &valorSaque);
+    validarNumero = scanf("%d", &valorSaque);
 
     /*
      * nesse primeiro bloco condicional, é realizada a validação do saque.
      * se o valor for menor que 0 ou maior que o saldo disponível do caixa, o saque não será efetuado.
      */
-    if (valorSaque < 0){
-        printf("Desculpe! Valor invalido para saque!");
+
+    if (validarNumero != 1) {
+        printf("Erro: o valor digitado e invalido! Digite apenas numeros inteiros!");
+    } else if (valorSaque <= 0){
+        printf("Erro: o valor numerico precisa ser maior que zero!");
     } else if (valorSaque > saldoDisponivel){
         printf("Desculpe! Este valor nao esta disponivel em nosso caixa!");
+    } else if (valorSaque % menorCedula != 0) {
+        printf("Erro: o valor R$%d nao pode ser pago com as cedulas disponiveis!", valorSaque);
     } else {
 
         // após a validação, haverá o desconto do saldo disponível do caixa com o valor do saque.
         saldoDisponivel -= valorSaque;
 
         /*
-         * posteriormente, o valor é dividido a partir do maior valor da cédula até o menor valor disponível.
-         * o quociente da divisão inteira entre o valor do saque e o valor da cédula/moeda
-         * corresponde à quantidade de cédulas/moedas
-         * o resto da divisão inteira entre o valor do saque e o valor da cédula/moeda
-         * corresponde ao valor restante que precisa ser repartido.
+         * nesse primeiro bloco condicional, é realizada a validação do saque.
+         * o saque não será efetuado se a entrada não for um número inteiro,
+         * se o valor for menor ou igual a 0, se for maior que o saldo disponível
+         * do caixa ou se não puder ser pago com as cédulas disponíveis.
          */
         while (valorSaque > 0){
 
@@ -79,7 +86,7 @@ int main(int argc, char *argv[]) {
         printf("\nCedulas de R$10: %d", nota10);
         printf("\nCedulas de R$5: %d", nota5);
         printf("\nCedulas de R$2: %d", nota2);
-        printf("\nMoedas de R$1: %d", moeda1);
+        printf("\nMoedas de R$1: %d\n", moeda1);
 
     }
 
